@@ -1,0 +1,5 @@
+four square
+https://api.foursquare.com/v2/venues/explore?client_id=W4DLCG1PEXBLFNKHM4LY5FFGVEYDYVYQ3BHQTTB04Z5ZL5TN&client_secret=GLCTNS1O4AQZE1L344JU5VJXQ025WFXTHP4FYUQD4XPGXSHT&v=20180323&categoryId=4deefb944765f83613cdba6e&near=Osaka&limit=5
+
+weather
+http://api.openweathermap.org/data/2.5/weather?q=Osaka,japan&APPID=5586df44a060b76dd847e3ffbfdee78e
