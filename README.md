@@ -6,6 +6,8 @@ Having a simple page with simple background would not be catchy to the user if t
 
 The UI is also mobile ready.
 
+The user experience would be very intuitive by giving all to options that the user only need, nothing will have to distract them when they try to explore the site.
+
 ![alt text](https://raw.githubusercontent.com/tan0300/bizmates-exam/master/demo-1.png)
 ![alt text](https://raw.githubusercontent.com/tan0300/bizmates-exam/master/demo-2.png)
 
