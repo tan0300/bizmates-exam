@@ -1,6 +1,6 @@
 # Bizmates Technical Exam, SQL EXAM
 
-My answer for question number 1
+Please see below for my answer for question number 1
 ```
 SELECT 
 Concat('T',LPAD(teacher.id,11,0)) as ID,
@@ -20,7 +20,8 @@ END as Roles
 FROM trn_teacher as teacher INNER JOIN trn_teacher_role as role on teacher.id = role.teacher_id
 ```
 
-My answer for question number 2
+
+And please see below for my answer for question number 2
 ```
 SELECT
 teacher.id as ID,
