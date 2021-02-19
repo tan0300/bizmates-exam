@@ -6,6 +6,8 @@ Having a simple page with simple background would not be catchy to the user if t
 
 The UI is also mobile ready.
 
+![alt text](https://raw.githubusercontent.com/tan0300/bizmates-exam/master/demo-1.png)
+![alt text](https://raw.githubusercontent.com/tan0300/bizmates-exam/master/demo-2.png)
 
 ## Getting Started
 
@@ -22,3 +24,5 @@ Before executing the site kindly access this first in the browser to allow cors 
 ```
 https://cors-anywhere.herokuapp.com/corsdemo
 ```
+
+![alt text](https://raw.githubusercontent.com/tan0300/bizmates-exam/master/for-cors-policy.png)
