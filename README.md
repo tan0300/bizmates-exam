@@ -4,6 +4,7 @@ The weather app was built on top of Laravel and VueJS. The UI was pretty simple 
 
 Having a simple page with simple background would not be catchy to the user if the designer has poor choice of fonts, in the latest trend of UX, the right choice of typography is really is having a big impact.
 
+The UI is also mobile ready.
 
 
 ## Getting Started
