@@ -1910,6 +1910,22 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1951,21 +1967,33 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      test: 'test',
+    var _ref;
+
+    return _ref = {
       available_cities: ['Tokyo', 'Yokohama', 'Kyoto', 'Osaka', 'Sapporo', 'Nagoya'],
       selected_city: "",
       weather: null,
-      error: null,
       action_message: ""
-    };
+    }, _defineProperty(_ref, "weather", []), _defineProperty(_ref, "recommended_places", []), _ref;
   },
   methods: {
     retrieveWeather: function retrieveWeather() {
       var self = this;
       self.error = '';
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=Osaka,japan&APPID=5586df44a060b76dd847e3ffbfdee78e').then(function (data) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=' + self.selected_city + ',japan&APPID=5586df44a060b76dd847e3ffbfdee78e').then(function (data) {
         console.log(data);
+        self.action_message = "";
+        self.weather = data.data;
+      })["catch"](function (error) {
+        self.error = "Something went wrong. Please try again.";
+      });
+    },
+    retreiveRecommendedPlaces: function retreiveRecommendedPlaces() {
+      var self = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('https://cors-anywhere.herokuapp.com/https://api.foursquare.com/v2/venues/explore?client_id=W4DLCG1PEXBLFNKHM4LY5FFGVEYDYVYQ3BHQTTB04Z5ZL5TN&client_secret=GLCTNS1O4AQZE1L344JU5VJXQ025WFXTHP4FYUQD4XPGXSHT&v=20180323&categoryId=4deefb944765f83613cdba6e&near=Osaka&limit=5').then(function (data) {
+        console.log(data, "places");
+        self.action_message = "";
+        self.recommended_places = data.data.response.groups[0].items;
       })["catch"](function (error) {
         self.error = "Something went wrong. Please try again.";
       });
@@ -1975,11 +2003,18 @@ __webpack_require__.r(__webpack_exports__);
         alert('Kindly select a city first');
       } else {
         this.action_message = "Please wait while we look up through your request";
+        this.retrieveWeather();
+        this.retreiveRecommendedPlaces();
       }
     }
   },
-  mounted: function mounted() {
-    this.retrieveWeather();
+  mounted: function mounted() {},
+  computed: {
+    farenheightToCelsius: function farenheightToCelsius() {
+      if (this.weather.length != 0) {
+        return (this.weather.main.feels_like - 273.15).toFixed(1);
+      }
+    }
   }
 });
 
@@ -37655,14 +37690,72 @@ var render = function() {
             _c("button", { attrs: { type: "submit" } }, [_vm._v("SUBMIT")]),
             _vm._v(" "),
             _c("span", { staticClass: "msg" }, [
-              _vm._v(" @" + _vm._s(_vm.action_message) + " ")
+              _vm._v(" " + _vm._s(_vm.action_message) + " ")
             ])
           ]
         )
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0)
+    _vm.weather.length != 0
+      ? _c("section", { staticClass: "ajax-section" }, [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col", attrs: { id: "weather" } }, [
+                _c("h2", { staticClass: "city-name" }, [
+                  _c("span", [_vm._v(_vm._s(_vm.selected_city))])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "city-temp" }, [
+                  _vm._v(_vm._s(_vm.farenheightToCelsius)),
+                  _c("sup", [_vm._v("°C")])
+                ]),
+                _vm._v(" "),
+                _c("figure", [
+                  _c("img", {
+                    staticClass: "city-icon",
+                    attrs: {
+                      src: __webpack_require__(/*! ../../images/cloud.svg */ "./resources/images/cloud.svg"),
+                      alt: "few clouds"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("figcaption", [
+                    _vm._v(_vm._s(_vm.weather.weather[0].description))
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "places" }, [
+                  _c(
+                    "ol",
+                    _vm._l(_vm.recommended_places, function(places) {
+                      return _c("li", { key: places.referralId }, [
+                        _vm._v(
+                          " " +
+                            _vm._s(places.venue.name) +
+                            "\n                                "
+                        ),
+                        _c("p", [
+                          _vm._v(
+                            " " + _vm._s(places.reasons.items[0].summary) + " "
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [_vm._v(_vm._s(_vm.action_message))])
+              ])
+            ])
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -37670,40 +37763,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "ajax-section" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("ul", { staticClass: "cities" }, [
-          _c("li", { staticClass: "city" }, [
-            _c(
-              "h2",
-              { staticClass: "city-name", attrs: { "data-name": "Japan,JP" } },
-              [
-                _c("span", [_vm._v("Japan")]),
-                _vm._v(" "),
-                _c("sup", [_vm._v("JP")])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "city-temp" }, [
-              _vm._v("4"),
-              _c("sup", [_vm._v("°C")])
-            ]),
-            _vm._v(" "),
-            _c("figure", [
-              _c("img", {
-                staticClass: "city-icon",
-                attrs: {
-                  src:
-                    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/02n.svg",
-                  alt: "few clouds"
-                }
-              }),
-              _vm._v(" "),
-              _c("figcaption", [_vm._v("few clouds")])
-            ])
-          ])
-        ])
-      ])
+    return _c("h1", [
+      _c("span", [_vm._v("Places you might want to visit in the city")])
     ])
   }
 ]
@@ -49883,6 +49944,17 @@ module.exports = function(module) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/images/cloud.svg":
+/*!************************************!*\
+  !*** ./resources/images/cloud.svg ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/cloud.svg?92b1c986b0b2c81cc05f604a9cda6ddd";
 
 /***/ }),
 
